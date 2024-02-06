@@ -1,6 +1,12 @@
+using main.src.Models;
+using main.src.Services.TestServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ITestServices,TestServices>();
+
+builder.Services.AddAutoMapper(typeof(TestProfile));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
