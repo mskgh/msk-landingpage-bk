@@ -1,25 +1,53 @@
-using main.src.Models;
-using main.src.Services.TestServices;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
+using main.src.Repositories;
+using main.src.Services.User;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<ITestServices,TestServices>();
-
-builder.Services.AddAutoMapper(typeof(TestProfile));
+builder.Services.AddDbContext<DataBaseContext>();
+builder.Services.AddScoped<IUserServices,UserServices>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("x-api-version"), new MediaTypeApiVersionReader("x-api-version"));
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",
+        new OpenApiInfo { Title = "MSK", Version = "v1.0" });
+    options.SwaggerDoc("v2",
+        new OpenApiInfo { Title = "MSK", Version = "v2.0" });
+
+});
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint($"/swagger/v1/swagger.json", $"MSK v1");
+            options.SwaggerEndpoint($"/swagger/v2/swagger.json", $"MSK v2");
+        });
 }
 
 app.UseHttpsRedirection();

@@ -1,6 +1,6 @@
-﻿namespace main.src.Models
+﻿namespace main.src.Dtos
 {
-    public class User
+    public class ReadUserDto
     {
         public Guid Id { get; set; }
 
