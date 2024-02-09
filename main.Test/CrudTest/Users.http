@@ -1,0 +1,39 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+@rootUrl=https://localhost:7049
+
+GET {{rootUrl}}/api/v1/user
+
+###
+
+POST {{rootUrl}}/api/v1/user
+Content-Type: application/json
+
+{
+   "firstName": "John",
+   "lastName": "Doe",
+   "otherNames": "HI",
+   "email": "john@gmail.com",
+   "mobileNumber": "0203254741",
+   "password": "123456"
+}
+
+###
+
+GET {{rootUrl}}/api/v1/user/58cba1b3-aad2-4bce-bace-48f3c3f295b0
+
+###
+
+PUT {{rootUrl}}/api/v1/user/a463b626-88c7-4c6a-b7d3-90c5d8b6f469
+Content-Type: application/json
+
+{
+   "firstName": "John",
+   "lastName": "Daniel",
+   "otherNames": "",
+   "email": "john@gmail.com",
+   "mobileNumber": "0203254741",
+   "password": "123456"
+}
+
+###

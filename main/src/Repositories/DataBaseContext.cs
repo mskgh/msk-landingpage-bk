@@ -1,4 +1,4 @@
-﻿using main.src.ENTITIES;
+﻿using main.src.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace main.src.Repositories
 {

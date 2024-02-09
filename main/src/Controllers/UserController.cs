@@ -37,10 +37,6 @@ namespace main.src.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dtos.ReadUserDto>> Get(Guid id)
         {
-            //WriteUserDto writeDto = new DTOs.WriteUserDto();
-
-            //writeDto.Id = id;
-
             Models.User userModel = userServices.GetUser(id);
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.User, ReadUserDto>());
@@ -60,9 +56,11 @@ namespace main.src.Controllers
             {
                 return BadRequest("No data sent");
             }
-            userServices.AddUser(userDto);
-
-            return Ok(userDto);
+            var newUser = userServices.AddUser(userDto);
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.User, ReadUserDto>());
+            var mapper = new Mapper(config);
+            ReadUserDto readUserDto = mapper.Map<ReadUserDto>(newUser);
+            return Ok(readUserDto);
 
 
         }

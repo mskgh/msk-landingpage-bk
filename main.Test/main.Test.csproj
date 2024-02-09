@@ -22,7 +22,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="IntegrationTest\" />
-    <Folder Include="CrudTest\" />
     <Folder Include="UnitTest\" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace main.src.ENTITIES
+namespace main.src.Entities
 {
     public class User
     {
@@ -8,6 +8,13 @@ namespace main.src.ENTITIES
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; } = null!;
+        public string FirstName { get; set; } = null!;
+        [Required]
+        public string LastName { get; set; } = null!;
+        public string OtherNames { get; set; }
+        [Required]
+        public string Email { get; set; }= null!;
+        public string MobileNumber {  get; set; }
+        public string Password {  get; set; }
     }
 }
