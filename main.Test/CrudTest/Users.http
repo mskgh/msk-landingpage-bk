@@ -37,3 +37,6 @@ Content-Type: application/json
 }
 
 ###
+
+DELETE {{rootUrl}}/api/v1/user/e34eb758-6f83-4838-aa7e-e0e6c0bd547a
+
