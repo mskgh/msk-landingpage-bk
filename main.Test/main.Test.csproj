@@ -21,6 +21,7 @@
     <ProjectReference Include="..\main\main.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CrudTest\" />
     <Folder Include="IntegrationTest\" />
     <Folder Include="UnitTest\" />
   </ItemGroup>

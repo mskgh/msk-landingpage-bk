@@ -1,0 +1,13 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "HostAddress": "https://localhost:7049"
+    },
+    "dev": {
+      "HostAddress": "https://localhost:7049"
+    },
+    "remote": {
+      "HostAddress": "https://localhost:7049"
+    }
+  }
+}
