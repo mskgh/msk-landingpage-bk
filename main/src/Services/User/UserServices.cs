@@ -8,19 +8,16 @@ namespace main.src.Services.User
     public class UserServices : IUserServices
     {
         DataBaseContext dataBaseContext;
-        public UserServices(DataBaseContext dataBaseContext) 
+        IMapper mapper;
+        public UserServices(DataBaseContext dataBaseContext, IMapper mapper) 
         {
             this.dataBaseContext = dataBaseContext;
+            this.mapper = mapper;
         }
 
         public List<Models.User> GetAllUsers()
         {
-
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Entities.User, Models.User>()) ;
-
             List<Entities.User> userEntity = dataBaseContext.Users.ToList();
-
-            var mapper = new Mapper(config);
 
             List<Models.User> users = mapper.Map<List<Models.User>>(userEntity);
 
@@ -48,8 +45,6 @@ namespace main.src.Services.User
             dataBaseContext.Users.Add(newUser);
             dataBaseContext.SaveChanges();
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Entities.User, Models.User>());
-            var mapper = new Mapper(config);
             user = mapper.Map<Models.User>(newUser);
             return user;
         }
@@ -60,10 +55,6 @@ namespace main.src.Services.User
              try 
              {
                  var userEntity = dataBaseContext.Users.Where(p => p.Id == id).Single();
-
-                 var config = new MapperConfiguration(cfg => cfg.CreateMap<Entities.User, Models.User>());
-
-                 var mapper = new Mapper(config);
 
                  user = mapper.Map<Models.User>(userEntity);
 

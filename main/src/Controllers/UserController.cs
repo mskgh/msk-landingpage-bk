@@ -15,9 +15,11 @@ namespace main.src.Controllers
     public class UserController : ControllerBase
     {
         IUserServices userServices;
-        public UserController(IUserServices userServices) 
+        IMapper mapper;
+        public UserController(IUserServices userServices, IMapper mapper) 
         { 
             this.userServices = userServices;
+            this.mapper = mapper;
         }
         // GET: api/<UserController>
         [HttpGet]
@@ -25,11 +27,8 @@ namespace main.src.Controllers
         {
             List<Models.User> users = userServices.GetAllUsers();
 
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.User, ReadUserDto>());
+            var userDtos = mapper.Map<List<ReadUserDto>>(users);
 
-            var mapper = new Mapper(config);
-
-            List<ReadUserDto> userDtos = mapper.Map<List<ReadUserDto>>(users);
             return Ok(userDtos);
         }
 
@@ -38,10 +37,6 @@ namespace main.src.Controllers
         public async Task<ActionResult<Dtos.ReadUserDto>> Get(Guid id)
         {
             Models.User userModel = userServices.GetUser(id);
-
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.User, ReadUserDto>());
-
-            var mapper = new Mapper(config);
 
             var readUserDto = mapper.Map<ReadUserDto>(userModel);
 
@@ -57,9 +52,9 @@ namespace main.src.Controllers
                 return BadRequest("No data sent");
             }
             var newUser = userServices.AddUser(userDto);
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Models.User, ReadUserDto>());
-            var mapper = new Mapper(config);
+
             ReadUserDto readUserDto = mapper.Map<ReadUserDto>(newUser);
+
             return Ok(readUserDto);
 
 

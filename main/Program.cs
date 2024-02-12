@@ -1,5 +1,7 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using AutoMapper;
+using main.src.Profilers;
 using main.src.Repositories;
 using main.src.Services.User;
 using Microsoft.OpenApi.Models;
@@ -7,6 +9,16 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var mapperConfiguration = new MapperConfiguration(cgf =>
+{
+    cgf.AddProfile(typeof(ModelToReadDtoProfile));
+    cgf.AddProfile(typeof(EntityToModelProfile));
+});
+
+var mapper = mapperConfiguration.CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
 builder.Services.AddDbContext<DataBaseContext>();
 builder.Services.AddScoped<IUserServices,UserServices>();
 
