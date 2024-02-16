@@ -22,21 +22,6 @@ namespace main.src.Controllers
             return Ok(sendSuccessDto);
         }
 
-        
-        [HttpGet("success")]
-        public SendSuccessDto<string> SendSuccessfulMessage()
-        {
-            SendSuccessDto<string> sendSuccessDto = new SendSuccessDto<string>();
-            List<Data<string>> data1 = new List<Data<string>>();
-
-
-            sendSuccessDto.Statuscode = 200;
-            sendSuccessDto.Message = "Everything works out well!";
-            sendSuccessDto.data = data1;
-            return sendSuccessDto;
-        }
-
-
         [HttpGet("dotnet/error")]
         public ActionResult<SendErrorDto> SendErrorMessageDotNet()
         {
@@ -47,15 +32,6 @@ namespace main.src.Controllers
             sendErrorDto.Errcode = "MSK_NOT_FOUND";
             return NotFound(sendErrorDto);
         }
-        [HttpGet("error")]
-        public SendErrorDto SendErrorMessage()
-        {
-            SendErrorDto sendErrorDto = new SendErrorDto();
-            
-            sendErrorDto.Statuscode = 404;
-            sendErrorDto.Error = "Can't find user name";
-            sendErrorDto.Errcode = "MSK_NOT_FOUND";
-            return sendErrorDto;
-        }
+       
     }
 }
