@@ -34,7 +34,7 @@ namespace main.src.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dtos.ReadUserDto>> Get(Guid id)
+        public async Task<ActionResult<Dtos.ReadUserDto>> GetById(Guid id)
         {
             Models.User userModel = userServices.GetUser(id);
 
@@ -45,7 +45,7 @@ namespace main.src.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] WriteUserDto userDto)
+        public IActionResult Post([FromBody] WriteUserDto userDto)
         {
             if (userDto == null) 
             {
@@ -55,7 +55,10 @@ namespace main.src.Controllers
 
             ReadUserDto readUserDto = mapper.Map<ReadUserDto>(newUser);
 
-            return Ok(readUserDto);
+            var routeValue = new { readUserDto.Id };
+            var actionName = nameof(GetById);
+
+            return CreatedAtAction(actionName, routeValue,readUserDto);
 
 
         }

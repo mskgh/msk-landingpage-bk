@@ -2,23 +2,24 @@
 using AutoMapper;
 using main.src.Dtos;
 using main.src.Repositories;
+using main.src.Repositories.MyInMemoryDB;
+using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 namespace main.src.Services.User
 {
     public class UserServices : IUserServices
     {
-        DataBaseContext dataBaseContext;
         IMapper mapper;
-        public UserServices(DataBaseContext dataBaseContext, IMapper mapper) 
+        IMyInMemoryDB database;
+        public UserServices(DataBaseContext dataBaseContext, IMapper mapper,IMyInMemoryDB database) 
         {
-            this.dataBaseContext = dataBaseContext;
             this.mapper = mapper;
+            this.database = database;
         }
 
         public List<Models.User> GetAllUsers()
         {
-            List<Entities.User> userEntity = dataBaseContext.Users.ToList();
-
+            List<Entities.User> userEntity = database.GetUsers();
             List<Models.User> users = mapper.Map<List<Models.User>>(userEntity);
 
             return users;
@@ -42,9 +43,8 @@ namespace main.src.Services.User
             newUser.MobileNumber = writeUserDto.MobileNumber;
             newUser.Password = writeUserDto.Password;
 
-            dataBaseContext.Users.Add(newUser);
-            dataBaseContext.SaveChanges();
-
+            database.AddUser(newUser);
+            
             user = mapper.Map<Models.User>(newUser);
             return user;
         }
@@ -54,8 +54,8 @@ namespace main.src.Services.User
              Models.User user = new Models.User();
              try 
              {
-                 var userEntity = dataBaseContext.Users.Where(p => p.Id == id).Single();
-
+                 //var userEntity = dataBaseContext.Users.Where(p => p.Id == id).Single();
+                 var userEntity = database.GetUserById(id);
                  user = mapper.Map<Models.User>(userEntity);
 
 
@@ -73,19 +73,7 @@ namespace main.src.Services.User
         {
             try
             {
-                var userEntity = dataBaseContext.Users.Find(id);
-
-                if(userEntity != null) 
-                {
-                    userEntity.FirstName = writeUserDto.FirstName;
-                    userEntity.LastName = writeUserDto.LastName;
-                    userEntity.Email = writeUserDto.Email;
-                    userEntity.OtherNames = writeUserDto.OtherNames;
-                    userEntity.MobileNumber = writeUserDto.MobileNumber;
-
-                    dataBaseContext.SaveChanges();
-                }
-
+                database.UpdateUser(id, writeUserDto);
 
             }
             catch (Exception e)
@@ -96,12 +84,13 @@ namespace main.src.Services.User
 
         public void DeleteUser(Guid id)
         {
-            Entities.User user = dataBaseContext.Users.Find(id);
+            Entities.User user = database.GetUserById(id);
 
             if (user != null) 
             {
-                dataBaseContext.Users.Remove(user);
-                dataBaseContext.SaveChanges();
+                //dataBaseContext.Users.Remove(user);
+                database.DeleteUser(id);
+                //dataBaseContext.SaveChanges();
             }
         }
     }
