@@ -23,7 +23,7 @@ namespace main.Test.UnitTest.Controllers
             mapper = A.Fake<IMapper>();
         }
 
-        /*[Fact]
+        [Fact]
         public void UserController_Get_ReturnOk()
         {
             //Arrange
@@ -39,9 +39,9 @@ namespace main.Test.UnitTest.Controllers
             result.Should().NotBeNull();
             result.Should().BeOfType(typeof(Task<ActionResult<List<src.Dtos.ReadUserDto>>>));
             
-        }*/
+        }
 
-       /* [Fact]
+       [Fact]
         public void UserController_Post_ReturnActionResult() 
         {
             //Arrange
@@ -53,7 +53,7 @@ namespace main.Test.UnitTest.Controllers
 
             //Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType(typeof(Task<IActionResult>));
-        }*/
+            result.Should().BeOfType(typeof(CreatedAtActionResult));
+        }
     }
 }

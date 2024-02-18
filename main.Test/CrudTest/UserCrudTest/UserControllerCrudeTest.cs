@@ -14,7 +14,7 @@ namespace main.Test.CrudTest.UserCrudTest
 {
     public class UserControllerCrudeTest
     {
-        IMapper mapper;
+       /* IMapper mapper;
         DataBaseContext dataBaseContext;
         public UserControllerCrudeTest(IMapper mapper,DataBaseContext dataBaseContext)
         {
@@ -40,7 +40,7 @@ namespace main.Test.CrudTest.UserCrudTest
             //Arrange
     
             //DbContextMock<>
-            /*src.Entities.User user1 = new src.Entities.User();
+            src.Entities.User user1 = new src.Entities.User();
             user1.FirstName = "Test";
             user1.LastName = "Test";
             user1.Email = "Test";
@@ -60,8 +60,8 @@ namespace main.Test.CrudTest.UserCrudTest
             UserController userController = new UserController(userServices,mapper);
             //Act
             var result = userController.Get();
-            //Assert*/
+            //Assert
             
-        }
+        }*/
     }
 }
