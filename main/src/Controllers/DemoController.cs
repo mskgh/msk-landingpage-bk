@@ -17,8 +17,9 @@ namespace main.src.Controllers
 
 
             sendSuccessDto.Statuscode = 200;
-            sendSuccessDto.Message = "Everything works out well!";
+            //sendSuccessDto.Message = "Everything works out well!";
             sendSuccessDto.data = data1;
+           
             return Ok(sendSuccessDto);
         }
 
@@ -29,7 +30,7 @@ namespace main.src.Controllers
 
             sendErrorDto.Statuscode = 404;
             sendErrorDto.Error = "Can't find user name";
-            sendErrorDto.Errcode = "MSK_NOT_FOUND";
+            //sendErrorDto.Errcode = "MSK_NOT_FOUND";
             return NotFound(sendErrorDto);
         }
        

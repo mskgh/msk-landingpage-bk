@@ -7,7 +7,7 @@ using main.src.Repositories.MyInMemoryDB;
 using main.src.Services.User;
 using Microsoft.OpenApi.Models;
 
-public class Program
+internal class Program
 {
     private static void Main(string[] args)
     {

@@ -13,4 +13,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="main.Test"/>
+  </ItemGroup>
 </Project>

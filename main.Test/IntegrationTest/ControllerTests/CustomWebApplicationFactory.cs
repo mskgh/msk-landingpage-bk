@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace main.Test.IntegrationTest.ControllerTests
 {
-    public class CustomWebApplicationFactory:WebApplicationFactory<Program>
+    internal class CustomWebApplicationFactory:WebApplicationFactory<Program>
     {
     }
 }
