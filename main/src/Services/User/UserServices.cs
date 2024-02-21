@@ -3,7 +3,6 @@ using AutoMapper;
 using main.src.Dtos;
 using main.src.Repositories;
 using main.src.Repositories.MyInMemoryDB;
-using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 namespace main.src.Services.User
 {
@@ -11,7 +10,7 @@ namespace main.src.Services.User
     {
         IMapper mapper;
         IMyInMemoryDB database;
-        public UserServices(DataBaseContext dataBaseContext, IMapper mapper,IMyInMemoryDB database) 
+        public UserServices( IMapper mapper,IMyInMemoryDB database) 
         {
             this.mapper = mapper;
             this.database = database;
