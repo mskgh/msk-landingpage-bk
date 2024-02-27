@@ -1,25 +1,42 @@
+using Amazon;
+using Amazon.DynamoDBv2;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using AutoMapper;
 using main.src.Profilers;
-using main.src.Repositories.MyInMemoryDB;
+using main.src.Repositories;
+using main.src.Repositories.DynamoUserDB;
 using main.src.Services.User;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//AWS Configuration
+var awsOptions = builder.Configuration.GetAWSOptions();
+builder.Services.AddDefaultAWSOptions(awsOptions);
+
+//Dynamo Configuration
+var dynamoDbConfig = builder.Configuration.GetSection("DynamoDbTables");
+builder.Services.Configure<DbSettings>(dynamoDbConfig);
+builder.Services.AddSingleton<IAmazonDynamoDB>(_ => new AmazonDynamoDBClient(RegionEndpoint.USEast2));
+
+
 var mapperConfiguration = new MapperConfiguration(cgf =>
 {
     cgf.AddProfile(typeof(ModelToReadDtoProfile));
     cgf.AddProfile(typeof(EntityToModelProfile));
+    cgf.AddProfile(typeof(UserWriteDtoToUserEntityProfile));
+    cgf.AddProfile(typeof(EntityUserToReadDtoProfile));
+    cgf.AddProfile(typeof(UpdateUserDtoToEntityUserWithoutPasswordProfile));
 });
 
 var mapper = mapperConfiguration.CreateMapper();
 
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<IMyInMemoryDB, MyInMemoryDB>();
+builder.Services.AddScoped<IDynamoDBUserRepository, DynamoDBUserRepository>();
 
 builder.Services.AddScoped<IUserServices, UserServices>();
 

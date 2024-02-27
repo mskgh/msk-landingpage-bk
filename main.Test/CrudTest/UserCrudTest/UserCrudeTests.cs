@@ -43,6 +43,7 @@ namespace main.Test.CrudTest.UserCrudTest
 
             result.Should().Contain(user => user.FirstName == "Test2");
             result.Should().Contain(user => user.LastName == "Test2");
+            result.Should().Contain(user => user.Email == "Test@e.com2");
 
         }
 

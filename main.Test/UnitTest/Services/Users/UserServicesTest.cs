@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
-using main.src.Repositories;
 using main.src.Services.User;
-using main.src;
-using main.src.Models;
-using main.src.Entities;
+using main.src.Dtos;
 
 
 namespace main.Test.UnitTest.Services.Users
@@ -21,36 +18,27 @@ namespace main.Test.UnitTest.Services.Users
         }
 
         [Fact]
-        public void UserServices_GetAllUsers_ReturnListofUsers()
+        public void UserServices_AssignIds_ReturnAUserWithIdandTernantId()
         {
             //Arrange
-            List<src.Models.User> users = new List<src.Models.User>();
-            src.Models.User users1 = new src.Models.User
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "j@gmail.com",
-                MobileNumber = "02020200202"
-            };
-            src.Models.User users2 = new src.Models.User
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                Email = "j@gmail.com",
-                MobileNumber = "02020200202"
-            };
-            users.Add(users1);
-            A.CallTo(() => userServices.GetAllUsers()).Returns(users);
-
-            //Act
-            var result = userServices.GetAllUsers();
+            var userWriteDtoWithoutIds = A.Fake<WriteUserDto>();
+            var Id = Guid.NewGuid();
+            var TernantId = Guid.NewGuid();
             
+            var user = mapper.Map<src.Entities.User>(userWriteDtoWithoutIds);
+            user.Id = Id;
+            user.TernantId = TernantId;
+
+            A.CallTo(() => userServices.AssignIds(userWriteDtoWithoutIds)).Returns(user);
+
 
             //Assert
-            result.Should().NotBeNull();
-            result.Should().BeOfType(typeof(List<src.Models.User>));
-            A.CallTo(()=>userServices.GetAllUsers()).MustHaveHappenedOnceExactly();
-            result.Should().Equal(users);
+            Id.Should().NotBeEmpty();
+            TernantId.Should().NotBeEmpty();
+            user.Id.Should().NotBeEmpty();
+            user.TernantId.Should().NotBeEmpty();
+            user.Id.Should().Be(Id);
+            user.TernantId.Should().Be(TernantId);
         }
     }
 }

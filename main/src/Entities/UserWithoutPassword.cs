@@ -1,10 +1,8 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace main.src.Entities
 {
-    public class User
+    public class UserWithoutPassword
     {
         [JsonPropertyName("Id")]
         public Guid Id { get; set; }
@@ -17,10 +15,9 @@ namespace main.src.Entities
         [JsonPropertyName("OtherNamez")]
         public string OtherNames { get; set; }
         [JsonPropertyName("Email")]
-        public string Email { get; set; }= null!;
+        public string Email { get; set; } = null!;
         [JsonPropertyName("MobileNumber")]
-        public string MobileNumber {  get; set; }
-        [JsonPropertyName("Password")]
-        public string Password {  get; set; }
+        public string MobileNumber { get; set; }
+
     }
 }
