@@ -5,6 +5,7 @@ using main.src.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using main.src.Repositories.DynamoUserDB;
+using main.src.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -115,7 +116,7 @@ namespace main.src.Controllers
             {
                 var sendFailureDto = new SendSuccessOrErrorDto<ReadUserDto>();
                 sendFailureDto.Success = false;
-                sendFailureDto.Message = "User with not found";
+                sendFailureDto.Message = "User was not found";
                 return NotFound(sendFailureDto);
             }
 
@@ -129,6 +130,9 @@ namespace main.src.Controllers
             var sendSuccessDto = new SendSuccessOrErrorDto<ReadUserDto>();
             sendSuccessDto.Success = true;
             sendSuccessDto.Message = "User updated successfully";
+            var user = await userRepository.GetUserById(id, ternantId);
+            sendSuccessDto.data = new List<ReadUserDto>();
+            sendSuccessDto.data.Add(mapper.Map<ReadUserDto>(user));
             return Created("~/api/v1/User/" + id + "/" + ternantId,sendSuccessDto);
         }
 

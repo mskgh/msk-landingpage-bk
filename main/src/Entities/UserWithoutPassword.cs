@@ -12,7 +12,7 @@ namespace main.src.Entities
         public string FirstName { get; set; } = null!;
         [JsonPropertyName("LastName")]
         public string LastName { get; set; } = null!;
-        [JsonPropertyName("OtherNamez")]
+        [JsonPropertyName("OtherNames")]
         public string OtherNames { get; set; }
         [JsonPropertyName("Email")]
         public string Email { get; set; } = null!;

@@ -104,7 +104,7 @@ namespace main.src.Repositories.DynamoUserDB
                     item.TryGetValue("TernantId",out var TernantId);
                     item.TryGetValue("FirstName", out var FirstName);
                     item.TryGetValue("LastName", out var LastName);
-                    item.TryGetValue("OtherNamez", out var OtherNames);
+                    item.TryGetValue("OtherNames", out var OtherNames);
                     item.TryGetValue("Email",out var Email);
                     item.TryGetValue("MobileNumber",out var MobileNumber);
 
